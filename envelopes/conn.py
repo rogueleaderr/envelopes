@@ -49,6 +49,12 @@ class SMTP(object):
         self._tls = tls
         self._timeout = timeout
 
+    def __repr__(self):
+        return "A SMTP object with host {host}, port {port}, login {login}, password {password}".format(host=self._host,
+                                                                                                        port=self._port,
+                                                                                                        login=self._login,
+                                                                                                        password=self._password)
+
     @property
     def is_connected(self):
         """Returns *True* if the SMTP connection is initialized and
@@ -95,11 +101,12 @@ class GMailSMTP(SMTP):
 
     GMAIL_SMTP_HOST = 'smtp.googlemail.com'
     GMAIL_SMTP_TLS = True
+    GMAIL_TLS_PORT = 587
 
     def __init__(self, login=None, password=None):
         super(GMailSMTP, self).__init__(
             self.GMAIL_SMTP_HOST, tls=self.GMAIL_SMTP_TLS, login=login,
-            password=password
+            password=password, port=self.GMAIL_TLS_PORT
         )
 
 
